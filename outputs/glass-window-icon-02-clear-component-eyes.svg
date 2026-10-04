@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+ <defs>
+  <linearGradient id="g" x1="198" y1="148" x2="836" y2="864" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#3E5BFA"/><stop offset=".52" stop-color="#765ACB"/><stop offset="1" stop-color="#D95B9A"/>
+  </linearGradient>
+  <radialGradient id="shine" cx="0" cy="0" r="1" gradientTransform="translate(748 748) rotate(-135) scale(285)" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF" stop-opacity=".38"/><stop offset=".56" stop-color="#FFF" stop-opacity=".13"/><stop offset="1" stop-color="#FFF" stop-opacity="0"/></radialGradient>
+ </defs>
+ <rect width="1024" height="1024" rx="226" fill="#FFF"/>
+ <rect x="176" y="176" width="672" height="672" rx="184" fill="url(#g)" stroke="#FFF" stroke-opacity=".8" stroke-width="7"/>
+ <rect x="205" y="205" width="614" height="614" rx="160" fill="none" stroke="#FFF" stroke-opacity=".14" stroke-width="3"/>
+ <path d="M651 780C717 761 765 720 790 657" fill="none" stroke="#FFF" stroke-opacity=".32" stroke-width="24" stroke-linecap="round"/>
+ <rect x="176" y="176" width="672" height="672" rx="184" fill="url(#shine)"/>
+ <!-- Exact visual language of the app's neutral EyesOverlay: two equal 21:44 capsules, 56-unit center spacing, -4° shared roll. -->
+ <g transform="translate(512 488) rotate(-4) scale(4.45)" fill="#FFF">
+  <rect x="-38.5" y="-22" width="21" height="44" rx="10.5"/>
+  <rect x="17.5" y="-22" width="21" height="44" rx="10.5"/>
+ </g>
+</svg>

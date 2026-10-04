@@ -1,0 +1,6 @@
+.git
+__pycache__
+*.pyc
+outputs/voice-island-capacitor
+outputs/*.svg
+outputs/*.zip

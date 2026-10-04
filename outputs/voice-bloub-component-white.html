@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Bloub 语音组件・白色背景</title>
+  <style>
+    *{box-sizing:border-box}
+    :root{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC",sans-serif;color:#302e3a}
+    body{margin:0;min-height:100vh;display:grid;place-items:center;padding:30px 0;background:#fff}
+    .demo{position:relative;width:auto;height:min(874px,calc(100vh - 60px));aspect-ratio:402/874;max-width:calc(100vw - 34px);overflow:hidden;border:7px solid #222228;border-radius:50px;background:#fff;box-shadow:0 0 0 2px #a7a7ad,0 0 0 3px rgba(255,255,255,.75),0 34px 78px rgba(38,38,52,.25),inset 0 0 0 1px rgba(255,255,255,.18)}
+    .island{position:absolute;z-index:20;top:12px;left:50%;transform:translateX(-50%);width:108px;height:28px;border-radius:20px;background:#09090c}
+    .intro{padding:72px 24px;text-align:center;transition:opacity .45s,filter .45s}.intro h1{margin:0 0 8px;font-size:25px;font-weight:580}.intro p{margin:0;color:#85828f;font-size:13px}
+    .voice-ambient{position:absolute;z-index:1;left:0;right:0;bottom:0;height:0;opacity:0;pointer-events:none;background:radial-gradient(ellipse 82% 72% at 8% 96%,#243cff,rgba(48,72,255,.88) 34%,rgba(93,69,225,.4) 61%,transparent 84%),radial-gradient(ellipse 90% 82% at 52% 72%,rgba(140,76,219,.86),rgba(180,90,207,.58) 48%,transparent 86%),radial-gradient(ellipse 78% 76% at 101% 78%,rgba(233,58,145,.9),rgba(242,125,175,.6) 40%,transparent 88%);transition:height .72s cubic-bezier(.2,.8,.2,1),opacity .55s}
+    .voice-zone{position:absolute;z-index:2;inset:auto 0 0;height:220px;pointer-events:none;touch-action:none;transition:height .72s cubic-bezier(.2,.8,.2,1)}
+    .voice-component{position:absolute;z-index:3;pointer-events:auto;touch-action:none;cursor:pointer;left:50%;bottom:-616px;width:680px;height:680px;transform:translateX(-50%);border:0;border-radius:50%;background-color:#6b4bd8;background-image:radial-gradient(circle at 18% 12%,#3048ff 0%,transparent 42%),radial-gradient(circle at 78% 42%,#8c4cdb 0%,transparent 58%),radial-gradient(circle at 52% 96%,#e93a91 0%,#f27daf 72%,#b45acf 100%);box-shadow:0 10px 28px rgba(48,60,230,.28),inset 0 0 0 1px rgba(255,255,255,.24);transition:width .55s cubic-bezier(.2,.8,.2,1),height .55s cubic-bezier(.2,.8,.2,1),top .65s cubic-bezier(.2,.8,.2,1),bottom .65s cubic-bezier(.2,.8,.2,1),transform .55s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+    .voice-component::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(145deg,rgba(255,255,255,.2),rgba(255,255,255,.05) 28%,transparent 50%);pointer-events:none}
+    .face{position:absolute;top:18px;left:50%;width:32px;height:29px;transform:translateX(-50%) scale(1.6)}
+    .eye{--x:0px;--y:0px;position:absolute;top:0;height:15px;border-radius:999px;background:#fff;transform:translate(var(--x),var(--y)) rotate(-10deg);transition:transform 1.2s cubic-bezier(.22,.72,.28,1)}.eye.left{left:6px;width:6px}.eye.right{right:6px;width:4px}.eye.blink{transform:translate(var(--x),var(--y)) rotate(-10deg) scaleY(.06);transition-duration:90ms}
+    .smile{position:absolute;left:2px;right:2px;bottom:0;height:13px;border-bottom:5px solid #fff;border-radius:0 0 50% 50%;opacity:0}
+    .voice-greeting{position:absolute;z-index:4;left:0;right:0;bottom:112px;text-align:center;color:#fff;font-size:22px;font-weight:430;opacity:0;transform:translateY(10px);transition:opacity .45s .18s,transform .55s .18s}
+    .voice-wave{position:absolute;z-index:4;left:50%;bottom:28px;width:240px;height:56px;transform:translateX(-50%) translateY(15px);opacity:0;transition:opacity .45s .28s,transform .55s .28s}.voice-wave canvas{display:block;width:100%;height:100%}
+    .hint{position:absolute;z-index:5;left:50%;bottom:78px;transform:translateX(-50%);color:rgba(68,63,79,.68);font-size:12px;white-space:nowrap;transition:opacity .25s}
+    .demo.active .intro{opacity:.3;filter:blur(3px)}.demo.active .voice-ambient{height:50%;opacity:1}.demo.active .voice-zone{height:50%}.demo.active .voice-component{top:52px;bottom:auto;width:120px;height:120px;transform:translateX(-50%);background:transparent;box-shadow:none}.demo.active .voice-component::after{opacity:0}.demo.active .face{top:45px;transform:translateX(-50%) scale(3.15);animation:float 3.6s ease-in-out infinite}.demo.active .smile{opacity:1}.demo.active .voice-greeting{opacity:1;transform:translateY(0)}.demo.active .voice-wave{opacity:1;transform:translateX(-50%) translateY(0)}.demo.active .hint{opacity:0}
+    .voice-component.dragging{transition:none;transform:translateX(-50%) translateY(var(--drag-y)) scale(var(--drag-scale));filter:blur(var(--drag-blur)) brightness(1.08);border-radius:48% 52% 50% 50%/42% 58% 44% 56%}
+    @keyframes float{50%{transform:translateX(-50%) scale(3.22) translateY(-2px)}}
+    @media(max-width:430px){body{padding:0}.demo{height:100vh;max-width:100vw;border:0;border-radius:0;box-shadow:none}}
+  </style>
+</head>
+<body>
+  <main class="demo" id="demo">
+    <div class="island" aria-hidden="true"></div>
+    <section class="intro"><h1>Bloub 语音组件</h1><p>点击或向上滑动开始语音交互</p></section>
+    <div class="voice-ambient"></div><div class="hint">向上滑动或轻触</div>
+    <section class="voice-zone" aria-label="语音入口">
+      <button class="voice-component" id="voice" aria-label="开始语音交互" aria-pressed="false"><span class="face"><i class="eye left"></i><i class="eye right"></i><i class="smile"></i></span></button>
+      <div class="voice-greeting">你好，我在听</div><div class="voice-wave" aria-label="正在聆听"><canvas id="wave"></canvas></div>
+    </section>
+  </main>
+  <script>
+    const demo=document.getElementById('demo'),voice=document.getElementById('voice'),eyes=[...document.querySelectorAll('.eye')];
+    function setActive(on){demo.classList.toggle('active',on);voice.setAttribute('aria-pressed',String(on));voice.setAttribute('aria-label',on?'结束语音交互':'开始语音交互')}
+    voice.addEventListener('click',()=>{if(!dragged)setActive(!demo.classList.contains('active'))});let startY=0,drag=false,dragged=false,ready=false;
+    voice.addEventListener('pointerdown',e=>{if(demo.classList.contains('active'))return;startY=e.clientY;drag=true;dragged=false;ready=false;voice.setPointerCapture(e.pointerId)});
+    voice.addEventListener('pointermove',e=>{if(!drag)return;const d=Math.max(0,startY-e.clientY),p=Math.min(1,d/86);dragged=d>5;ready=d>=86;voice.classList.add('dragging');voice.style.setProperty('--drag-y',-p*110+'px');voice.style.setProperty('--drag-scale',1+p*.24);voice.style.setProperty('--drag-blur',p*8+'px')});
+    function endDrag(){if(!drag)return;drag=false;voice.classList.remove('dragging');voice.style.cssText='';if(ready)setActive(true);setTimeout(()=>dragged=false,0)}voice.addEventListener('pointerup',endDrag);voice.addEventListener('pointercancel',endDrag);
+    function gaze(){if(!demo.classList.contains('active')){const p=[[-2,1],[2,-1],[0,0],[-1,-1],[1,1]][Math.floor(Math.random()*5)];eyes.forEach((e,i)=>{e.style.setProperty('--x',p[0]+(i?-.15:.15)+'px');e.style.setProperty('--y',p[1]+'px')})}setTimeout(gaze,1700+Math.random()*2100)}function blink(){eyes.forEach(e=>e.classList.add('blink'));setTimeout(()=>eyes.forEach(e=>e.classList.remove('blink')),150);setTimeout(blink,1900+Math.random()*2700)}gaze();blink();
+    const canvas=document.getElementById('wave'),ctx=canvas.getContext('2d');function draw(t){const dpr=devicePixelRatio||1,w=canvas.clientWidth,h=canvas.clientHeight;if(canvas.width!==w*dpr){canvas.width=w*dpr;canvas.height=h*dpr}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);ctx.strokeStyle='rgba(255,255,255,.94)';ctx.lineWidth=2.4;ctx.lineCap='round';ctx.beginPath();for(let x=0;x<w;x++){const a=Math.sin(Math.PI*x/w),y=h/2+Math.sin(x*.09+t*.005)*10*a+Math.sin(x*.035-t*.003)*6*a;x?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();requestAnimationFrame(draw)}requestAnimationFrame(draw);
+  </script>
+</body>
+</html>
